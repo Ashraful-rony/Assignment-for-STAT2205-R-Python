@@ -1,0 +1,546 @@
+\documentclass[12pt,a4paper]{article}
+
+%=====================================================
+% Packages
+%=====================================================
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+%=====================================================
+% Colors
+%=====================================================
+
+\definecolor{mainblue}{RGB}{20,40,90}
+\definecolor{lightblue}{RGB}{220,235,255}
+\definecolor{codered}{RGB}{180,20,20}
+\definecolor{codegreen}{RGB}{0,120,0}
+\definecolor{backcolour}{RGB}{245,245,245}
+
+%=====================================================
+% Hyperlink Setup
+%=====================================================
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+%=====================================================
+% Listings Setup
+%=====================================================
+
+\lstset{
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{codegreen},
+    stringstyle=\color{codered},
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    tabsize=2
+}
+
+%=====================================================
+% Title Formatting
+%=====================================================
+
+\titleformat{\section}
+{\Large\bfseries\color{mainblue}}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\large\bfseries\color{blue}}
+{\thesubsection}{1em}{}
+
+%=====================================================
+% Header Footer
+%=====================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Airline Data}
+\fancyhf{}
+\fancyhead[R]{R Programming Project}
+\fancyfoot[C]{\thepage}
+
+%=====================================================
+% TOC Style
+%=====================================================
+
+\renewcommand{\cftsecfont}{\bfseries}
+
+%=====================================================
+% Document
+%=====================================================
+
+\begin{document}
+
+%=====================================================
+% Title Page
+%=====================================================
+
+\begin{titlepage}
+
+\begin{center}
+
+\vspace*{1.5cm}
+
+{\Huge\bfseries\color{mainblue}
+AIRLINE DATA\\
+STATISTICAL ANALYSIS
+}
+
+\vspace{1cm}
+
+{\LARGE R Programming Project}
+
+\vspace{1.5cm}
+
+\includegraphics[width=0.7\textwidth]{download.png}
+
+\vspace{1.5cm}
+
+\begin{tcolorbox}[colback=lightblue,colframe=mainblue,width=0.9\textwidth]
+
+\centering
+
+\Large
+
+\textbf{Course Title:} Programming with R \\[0.3cm]
+
+\textbf{Project Type:} Statistical Data Analysis \\[0.3cm]
+
+\textbf{Prepared By:} Md.Ashraful Islam \\[0.3cm]
+
+\textbf{Student ID:} 12310004 \\[0.3cm]
+
+\textbf{Department:} Statistics \\[0.3cm]
+
+\textbf{University:} Begum Rokeya University, Rangpur
+
+\end{tcolorbox}
+
+\vfill
+
+{\Large \today}
+
+\end{center}
+
+\end{titlepage}
+
+%=====================================================
+% Table of Contents
+%=====================================================
+
+\tableofcontents
+
+\vspace{1cm}
+
+%=====================================================
+% Introduction
+%=====================================================
+
+\section{Introduction}
+
+This project presents a complete statistical analysis of airline data using R Programming. Different statistical methods, visualization techniques, correlations, and regression analysis were performed to understand airline ticket pricing, delays, passenger behavior, and other flight-related factors.
+
+%=====================================================
+% Setup and Data Import
+%=====================================================
+
+\section{Setup and Data Import}
+
+\begin{lstlisting}[language=R]
+#wd Setup 
+getwd()
+setwd("C:/Users/Ashraful/Downloads/New folder")
+getwd()
+list.files()
+
+airline_random_1000 <- read.csv(
+"C:/Users/Ashraful/Downloads/New folder/airline_random_1000.csv")
+
+head(airline_random_1000)
+View(airline_random_1000)
+str(airline_random_1000)
+\end{lstlisting}
+
+%=====================================================
+% New Variable Creation
+%=====================================================
+
+\section{New Variable Creation}
+
+\begin{lstlisting}[language=R]
+my_id <- 10004
+
+airline_random_1000$new_miles <- 
+airline_random_1000$miles + my_id
+
+airline_random_1000$new_passengers <- 
+airline_random_1000$passengers + my_id
+
+airline_random_1000$new_coach_price <- 
+airline_random_1000$coach_price + my_id
+
+airline_random_1000$new_firstclass_price <- 
+airline_random_1000$firstclass_price + my_id
+
+View(airline_random_1000)
+\end{lstlisting}
+
+%=====================================================
+% Question 1
+%=====================================================
+
+\section{Question 1: Coach Ticket Price Analysis}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+mean(airline_random_1000$new_coach_price)
+
+max(airline_random_1000$new_coach_price)
+
+min(airline_random_1000$new_coach_price)
+
+median(airline_random_1000$new_coach_price)
+
+sd(airline_random_1000$new_coach_price)
+
+hist(airline_random_1000$new_coach_price, 
+     main = "Histogram of Coach Ticket Price",
+     xlab = "Coach Ticket Price",
+     ylab = "Frequency",
+     col = "skyblue",
+     border = "black")
+
+boxplot(airline_random_1000$new_coach_price,
+        main = "Boxplot of Coach Ticket Price",
+        ylab = "Coach Ticket Price",
+        col = "red",
+        border = "black")
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Mean shows the average coach ticket price.
+\item Maximum and minimum indicate highest and lowest prices.
+\item Standard deviation explains variability.
+\item Histogram shows data distribution.
+\item Boxplot identifies outliers.
+\end{itemize}
+
+%=====================================================
+% Question 2
+%=====================================================
+
+\section{Question 2: 8-Hour Flight Analysis}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+flight_8_hr <- subset(airline_random_1000, hours == 8)
+
+summary(flight_8_hr$new_coach_price)
+
+mean(flight_8_hr$new_coach_price)
+
+min(flight_8_hr$new_coach_price)
+
+max(flight_8_hr$new_coach_price)
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Analysis focuses on only 8-hour flights.
+\item Average, minimum, and maximum prices are calculated.
+\item Helps understand long-distance flight pricing.
+\end{itemize}
+
+%=====================================================
+% Question 3
+%=====================================================
+
+\section{Question 3: Flight Delay Distribution}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+summary(airline_random_1000$delay)
+
+hist(airline_random_1000$delay,
+     main = "Flight Delay Distribution",
+     xlab = "Delay Minutes",
+     ylab = "Frequency",
+     col = "orange",
+     border = "black")
+
+boxplot(airline_random_1000$delay,
+        main = "Delay Boxplot",
+        ylab = "Delay Minutes",
+        col = "yellow")
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Most flights delay between 0--20 minutes.
+\item Some flights experience large delays.
+\item Boxplot identifies extreme delays.
+\end{itemize}
+
+%=====================================================
+% Question 4
+%=====================================================
+
+\section{Question 4: Correlation with Coach Price}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+cor(airline_random_1000$coach_price,
+    airline_random_1000$new_miles)
+
+cor(airline_random_1000$coach_price,
+    airline_random_1000$new_passengers)
+
+cor(airline_random_1000$coach_price,
+    airline_random_1000$delay)
+
+cor(airline_random_1000$coach_price,
+    airline_random_1000$hours)
+
+plot(airline_random_1000$new_miles,
+     airline_random_1000$new_coach_price,
+     main = "New Miles vs New Coach Price",
+     xlab = "Miles",
+     ylab = "Coach Price",
+     col = "blue")
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Longer distance flights cost more.
+\item Flight hours positively affect prices.
+\item Delay has weak correlation with price.
+\end{itemize}
+
+%=====================================================
+% Question 5
+%=====================================================
+
+\section{Question 5: Coach vs First-Class Price}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+cor(airline_random_1000$new_coach_price,
+    airline_random_1000$new_firstclass_price)
+
+plot(airline_random_1000$new_coach_price,
+     airline_random_1000$new_firstclass_price,
+     main = "Coach vs First Class Price",
+     xlab = "Coach Price",
+     ylab = "First Class Price",
+     col = "darkgreen")
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Strong positive correlation exists.
+\item Higher coach prices mean higher first-class prices.
+\end{itemize}
+
+%=====================================================
+% Question 6
+%=====================================================
+
+\section{Question 6: WiFi, Meal and Entertainment Effect}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+aggregate(new_coach_price ~ inflight_wifi,
+          data = airline_random_1000,
+          mean)
+
+aggregate(new_coach_price ~ inflight_meal,
+          data = airline_random_1000,
+          mean)
+
+aggregate(new_coach_price ~ inflight_entertainment,
+          data = airline_random_1000,
+          mean)
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Flights with WiFi cost more.
+\item Meals and entertainment increase prices.
+\item Extra facilities improve travel experience.
+\end{itemize}
+
+%=====================================================
+% Question 7
+%=====================================================
+
+\section{Question 7: Passengers vs Flight Hours}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+cor(airline_random_1000$passengers,
+    airline_random_1000$hours)
+
+plot(airline_random_1000$hours,
+     airline_random_1000$passengers,
+     main = "Hours vs Passengers",
+     xlab = "Flight Hours",
+     ylab = "Passengers",
+     col = "purple")
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Weak positive relationship exists.
+\item Longer flights tend to carry more passengers.
+\end{itemize}
+
+%=====================================================
+% Question 8
+%=====================================================
+
+\section{Question 8: Weekend vs Weekday Price}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+aggregate(new_coach_price ~ weekend,
+          data = airline_random_1000,
+          mean)
+
+boxplot(new_coach_price ~ weekend,
+        data = airline_random_1000,
+        main = "Weekend vs Weekday Prices",
+        col = "cyan")
+
+t.test(new_coach_price ~ weekend,
+       data = airline_random_1000)
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Weekend flights are slightly more expensive.
+\item T-test checks statistical significance.
+\item p-value below 0.05 means significant difference.
+\end{itemize}
+
+%=====================================================
+% Question 9
+%=====================================================
+
+\section{Question 9: Redeye vs Non-Redeye Flights}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+aggregate(new_coach_price ~ redeye,
+          data = airline_random_1000,
+          mean)
+
+boxplot(new_coach_price ~ redeye,
+        data = airline_random_1000,
+        main = "Redeye vs Non-Redeye",
+        col = "pink")
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Redeye flights are generally cheaper.
+\item Overnight flights are less preferred.
+\end{itemize}
+
+%=====================================================
+% Question 10
+%=====================================================
+
+\section{Question 10: Full Statistical Analysis}
+
+\subsection{R Code}
+
+\begin{lstlisting}[language=R]
+summary(airline_random_1000)
+
+mean(airline_random_1000$new_coach_price)
+
+median(airline_random_1000$new_coach_price)
+
+sd(airline_random_1000$new_coach_price)
+
+cor(airline_random_1000[,c("coach_price",
+                           "miles",
+                           "delay",
+                           "hours",
+                           "passengers")])
+
+model <- lm(coach_price ~ hours +
+              miles +
+              delay,
+            data = airline_random_1000)
+
+summary(model)
+\end{lstlisting}
+
+\subsection{Interpretation}
+
+\begin{itemize}
+\item Miles significantly increase ticket price.
+\item Flight hours positively affect prices.
+\item Delay has smaller impact.
+\item Regression explains variable relationships.
+\end{itemize}
+
+%=====================================================
+% Conclusion
+%=====================================================
+
+\section{Conclusion}
+
+This project successfully analyzed airline ticket pricing, delays, passenger counts, flight duration, and airline facilities using R Programming. Different statistical techniques such as descriptive statistics, correlation analysis, hypothesis testing, visualization, and regression analysis were used to understand the airline dataset effectively.
+
+\vspace{1cm}
+
+\begin{center}
+
+{\Huge\bfseries\color{mainblue}THANK YOU}
+
+\end{center}
+
+\end{document}
